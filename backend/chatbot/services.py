@@ -9,7 +9,6 @@ from langdetect import detect, LangDetectException
 
 logger = logging.getLogger(__name__)
 
-# global instances
 _GLOBAL_RAG_SERVICE = None
 _GLOBAL_LLM = None
 
@@ -42,7 +41,7 @@ class LanguagePrompts:
     PROMPTS = {
         'fr': """Tu es un assistant juridique spécialisé en droit tunisien des associations.
 
-⚠️ RÈGLES ABSOLUES (NON-NÉGOCIABLES):
+ RÈGLES ABSOLUES (NON-NÉGOCIABLES):
 
 1. RÉPONDS TOUJOURS EN FRANÇAIS - Ta réponse DOIT être entièrement en français
 2. UTILISE UNIQUEMENT LE CONTEXTE FOURNI - Aucune autre source d'information
@@ -80,7 +79,7 @@ Example of BAD response: Making up dates or procedures not mentioned.""",
 
         'ar': """أنت مساعد قانوني متخصص في القانون التونسي للجمعيات.
 
-⚠️ القواعد المطلقة (غير قابلة للتفاوض):
+  القواعد المطلقة (غير قابلة للتفاوض):
 
 1. رد دائماً باللغة العربية - يجب أن تكون ردك بالكامل باللغة العربية
 2. استخدم فقط السياق المقدم - لا مصادر أخرى
@@ -148,7 +147,6 @@ class ChatbotService:
 
     def process_message(self, conversation: Conversation, user_message: str) -> dict:
         try:
-            # 🌐 DETECT LANGUAGE
             user_language = detect_language(user_message)
             logger.info(f"User language: {user_language.upper()}")
 
@@ -213,10 +211,8 @@ class ChatbotService:
                     language=user_language
                 )
 
-            # Log the generated response
             logger.info(f"GENERATED RESPONSE ({user_language.upper()}): {response_text[:200]}...")
 
-            # Save assistant response
             Message.objects.create(
                 conversation=conversation,
                 role='assistant',
@@ -232,7 +228,6 @@ class ChatbotService:
 
         except Exception as e:
             logger.error(f"Error processing message: {e}", exc_info=True)
-            # Fallback error message in detected language (if possible)
             try:
                 error_lang = detect_language(user_message)
             except:
@@ -302,7 +297,6 @@ class ChatbotService:
         logger.info(f"Generating response in: {language.upper()}")
         logger.info(f"System prompt language: {language}")
 
-        # generate with VERY conservative parameters to prevent hallucination
         response = self.llm(
             prompt,
             max_tokens=512,
