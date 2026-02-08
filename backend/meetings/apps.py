@@ -6,5 +6,4 @@ class MeetingsConfig(AppConfig):
     name = 'meetings'
 
     def ready(self):
-        # Import signal handlers when Django starts
         import meetings.signals
