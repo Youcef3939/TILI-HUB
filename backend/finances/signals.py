@@ -15,11 +15,9 @@ def create_budget_allocation_for_new_project(sender, instance, created, **kwargs
     """
     if created:  # Only run when a project is first created
         try:
-            # Check if a budget allocation already exists for this project
             existing_allocation = BudgetAllocation.objects.filter(project=instance).exists()
 
             if not existing_allocation:
-                # Create a new budget allocation with the project's budget amount
                 allocation = BudgetAllocation.objects.create(
                     project=instance,
                     allocated_amount=instance.budget,
@@ -52,10 +50,8 @@ def update_budget_after_transaction_verification(sender, instance, created, **kw
                     }
                 )
 
-                # Get previous status
                 prev_status = getattr(instance, '_prev_status', None)
 
-                # Only update budget if transaction status changed to verified
                 if prev_status != 'verified' and instance.status == 'verified':
                     budget.used_amount += instance.amount
                     budget.save()
@@ -64,8 +60,6 @@ def update_budget_after_transaction_verification(sender, instance, created, **kw
         except Exception as e:
             print(f"Error updating budget: {e}")
 
-    # Process income transactions (including membership fees)
-    # Log for debugging purposes
     if instance.status == 'verified' and instance.transaction_type == 'income':
         print(f"Income transaction verified: {instance.id} - {instance.amount} - Category: {instance.category}")
 
@@ -77,13 +71,10 @@ def update_budget_after_transaction_deletion(sender, instance, **kwargs):
     """
     from django.db import transaction
 
-    # Only handle if status was verified and transaction was linked to a project
     if instance.status == 'verified' and instance.project:
-        # Only process expense transactions
         if instance.transaction_type == 'expense':
             try:
                 with transaction.atomic():
-                    # Reduce used amount when deleting an expense
                     budget = BudgetAllocation.objects.get(project=instance.project)
                     budget.used_amount = max(0, budget.used_amount - instance.amount)
                     budget.save()
