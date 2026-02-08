@@ -47,7 +47,6 @@ class Command(BaseCommand):
         duration = options['duration']
         association_id = options.get('association_id')
 
-        # Validate inputs
         if months <= 0 or months > 12:
             self.stdout.write(self.style.ERROR('Months must be between 1 and 12'))
             return
@@ -64,7 +63,6 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR('Duration must be between 1 and 8 hours'))
             return
 
-        # Get associations
         if association_id:
             associations = AssociationAccount.objects.filter(id=association_id)
             if not associations.exists():
@@ -76,9 +74,7 @@ class Command(BaseCommand):
         total_created = 0
         now = timezone.now()
 
-        # For each association
         for association in associations:
-            # Get any existing meetings in the next months to avoid duplicates
             start_date = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
             end_date = (start_date + relativedelta(months=months)).replace(day=28)
 
@@ -89,7 +85,6 @@ class Command(BaseCommand):
                 start_date__lte=end_date
             )
 
-            # Collect existing meeting months to avoid duplicates
             existing_months = set()
             for meeting in existing_meetings:
                 meeting_key = f"{meeting.start_date.year}-{meeting.start_date.month}"
