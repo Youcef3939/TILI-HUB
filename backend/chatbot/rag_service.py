@@ -14,7 +14,6 @@ class RAGService:
     def __init__(self):
         self.qdrant_client = QdrantClient(path="./qdrant_data")
 
-        # sentence-transformers for embeddings
         self.embedding_model = SentenceTransformer('paraphrase-multilingual-mpnet-base-v2')
 
         self.chunker = TokenChunker(
@@ -45,7 +44,6 @@ class RAGService:
 
     def process_and_store_document(self, document_id: int, title: str, content: str):
 
-        # Chunk with Chonkie
         chunks = self.chunker.chunk(content)
 
         logger.info(f"Document '{title}' split into {len(chunks)} chunks")
@@ -70,7 +68,6 @@ class RAGService:
                 )
             )
 
-        # Batch insert to Qdrant
         self.qdrant_client.upsert(
             collection_name=self.collection_name,
             points=points
@@ -82,7 +79,7 @@ class RAGService:
         try:
             try:
                 collection_info = self.qdrant_client.get_collection(self.collection_name)
-                logger.info(f"🗄️ Collection '{self.collection_name}' has {collection_info.points_count} points")
+                logger.info(f" Collection '{self.collection_name}' has {collection_info.points_count} points")
 
                 if collection_info.points_count == 0:
                     logger.error("Collection is EMPTY! Run: python manage.py ingest_documents")
@@ -91,12 +88,10 @@ class RAGService:
                 logger.error(f"Collection check failed: {e}")
                 return []
 
-            # Embed the query
             logger.info(f"Embedding query: {query[:100]}...")
             query_embedding = self.embed_text(query)
             logger.info(f"Query embedded, vector size: {len(query_embedding)}")
 
-            # Search in Qdrant using query_points (more reliable than search())
             logger.info(f"Searching in Qdrant for top {top_k} results...")
 
             try:
