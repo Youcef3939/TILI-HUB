@@ -250,3 +250,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **Note:** This project was developed as part of the ESPRIT Maratech 2026 hackathon
+#MaraTechEsprit2026
