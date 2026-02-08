@@ -17,7 +17,6 @@ class Command(BaseCommand):
         pdf_path = options['pdf_path']
         debug = options.get('debug', False)
 
-        # Check if file exists
         if not os.path.exists(pdf_path):
             self.stdout.write(self.style.ERROR(f"PDF file not found at {pdf_path}"))
             # Check if the directory exists
@@ -29,7 +28,6 @@ class Command(BaseCommand):
             return
 
         try:
-            # Extract text from PDF
             self.stdout.write("Extracting text from PDF...")
             text = extract_text_from_pdf(pdf_path)
 
@@ -37,13 +35,11 @@ class Command(BaseCommand):
                 self.stdout.write(f"Extracted text (first 200 chars): {text[:200]}...")
                 self.stdout.write(f"Total text length: {len(text)} characters")
 
-            # First, check if the document already exists
             existing_docs = Document.objects.filter(title="Décret-loi n° 2011-88 du 24 septembre 2011")
             if existing_docs.exists():
                 self.stdout.write(self.style.WARNING("Document already exists, deleting it first..."))
                 existing_docs.delete()
 
-            # Store document manually with error handling at each step
             self.stdout.write("Creating document entry...")
             document = Document(
                 title="Décret-loi n° 2011-88 du 24 septembre 2011",
@@ -53,11 +49,9 @@ class Command(BaseCommand):
             document.save()
             self.stdout.write(self.style.SUCCESS(f"Created document with ID: {document.id}"))
 
-            # Create chunks manually - FIXED algorithm
             self.stdout.write("Creating chunks...")
             self.fixed_chunking(document, text, debug)
 
-            # Initialize TF-IDF index
             self.stdout.write("Setting up TF-IDF index...")
             setup_tfidf_index()
 
@@ -78,13 +72,10 @@ class Command(BaseCommand):
         positions = []
         current_pos = 0
 
-        # calculate all chunk positions to avoid infinite loops
         while current_pos < total_length:
             end_pos = min(current_pos + chunk_size, total_length)
 
-            # Try to find a clean break point
             if end_pos < total_length:
-                # Look for the nearest sentence end or paragraph
                 for break_char in ['.', '!', '?', '\n']:
                     break_pos = text.find(break_char, end_pos - 30, end_pos + 30)
                     if break_pos != -1:
@@ -93,14 +84,11 @@ class Command(BaseCommand):
 
             positions.append((current_pos, end_pos))
 
-            # Move to next position, ensuring we make progress
             current_pos = end_pos + 1 if end_pos == current_pos else end_pos
 
-            # Safety check to prevent issues with very small documents
             if current_pos >= total_length:
                 break
 
-        # Now create chunks based on calculated positions
         for i, (start, end) in enumerate(positions):
             chunk_text = text[start:end].strip()
             if not chunk_text:  # Skip empty chunks
