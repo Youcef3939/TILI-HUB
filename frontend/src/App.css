@@ -1,0 +1,643 @@
+/* Add to the end of your App.css file */
+
+/* ====================================================================
+   16. SIMPLIFIED BUTTON STYLES - MOBILE OPTIMIZED
+   ==================================================================== */
+
+/* Remove all MUI ripple effects globally */
+.MuiTouchRipple-root {
+    display: none !important;
+}
+
+/* Simple, clean buttons */
+button,
+.MuiButton-root,
+.MuiIconButton-root,
+.MuiButtonBase-root {
+    -webkit-tap-highlight-color: transparent !important;
+    outline: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Mobile-first button sizing */
+@media (max-width: 600px) {
+    button,
+    .MuiButton-root,
+    .MuiIconButton-root {
+        min-height: 52px !important;
+        min-width: 52px !important;
+        font-size: 1.05rem !important;
+        padding: 14px 28px !important;
+        touch-action: manipulation;
+    }
+
+    .MuiIconButton-root {
+        padding: 14px !important;
+    }
+
+    /* Make menu items larger on mobile */
+    .MuiMenuItem-root,
+    .MuiListItemButton-root {
+        min-height: 56px !important;
+        font-size: 1.05rem !important;
+        padding: 14px 20px !important;
+    }
+
+    /* Ensure dropdowns are visible */
+    .MuiMenu-paper,
+    .MuiPopover-paper {
+        max-width: calc(100vw - 32px) !important;
+        min-width: calc(100vw - 32px) !important;
+        left: 16px !important;
+        right: 16px !important;
+        max-height: calc(100vh - 100px) !important;
+        overflow-y: auto !important;
+    }
+
+    /* Profile menu specifically */
+    .MuiMenu-root .MuiPaper-root {
+        width: calc(100vw - 32px) !important;
+        max-width: calc(100vw - 32px) !important;
+    }
+}
+
+/* Ensure text in buttons is always readable */
+.MuiButton-root,
+.MuiIconButton-root {
+    font-weight: 600 !important;
+    letter-spacing: 0.03em !important;
+}
+
+/* Remove any hover effects on touch devices */
+@media (hover: none) and (pointer: coarse) {
+    button:hover,
+    .MuiButton-root:hover,
+    .MuiIconButton-root:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+}
+
+/* Focus visible for keyboard navigation */
+button:focus-visible,
+.MuiButton-root:focus-visible,
+.MuiIconButton-root:focus-visible {
+    outline: 3px solid var(--focus-color, #00897B) !important;
+    outline-offset: 2px !important;
+}
+
+/* Active state for touch feedback */
+button:active,
+.MuiButton-root:active,
+.MuiIconButton-root:active {
+    opacity: 0.7;
+    transform: scale(0.98);
+    transition: all 100ms ease;
+}
+
+/* ====================================================================
+   17. AVATAR & ICON IMPROVEMENTS
+   ==================================================================== */
+
+.MuiAvatar-root {
+    font-weight: 700 !important;
+    user-select: none;
+}
+
+.MuiSvgIcon-root {
+    user-select: none;
+    pointer-events: none;
+}
+
+/* ====================================================================
+   18. MOBILE MENU FIX - ENSURE FULL VISIBILITY
+   ==================================================================== */
+
+@media (max-width: 600px) {
+    /* Prevent menu from being cut off */
+    .MuiModal-root {
+        z-index: 1400 !important;
+    }
+
+    .MuiMenu-root {
+        z-index: 1400 !important;
+    }
+
+    .MuiPopover-root {
+        z-index: 1400 !important;
+    }
+
+    /* Ensure proper scrolling in menus */
+    .MuiMenu-list,
+    .MuiList-root {
+        max-height: calc(100vh - 120px) !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    /* Add padding to menu for safe areas (notch) */
+    .MuiMenu-paper {
+        padding-top: env(safe-area-inset-top, 0) !important;
+        padding-bottom: env(safe-area-inset-bottom, 0) !important;
+    }
+}
+
+/* ====================================================================
+   19. PREVENT DOUBLE-TAP ZOOM ON BUTTONS (iOS)
+   ==================================================================== */
+
+button,
+.MuiButton-root,
+.MuiIconButton-root,
+.MuiButtonBase-root {
+    touch-action: manipulation !important;
+}
+
+/* ====================================================================
+   20. SIMPLIFY COMPLEX MUI STRUCTURES
+   ==================================================================== */
+
+/* Remove nested spans and complex structures */
+.MuiButton-root > *,
+.MuiIconButton-root > * {
+    pointer-events: none;
+}
+
+/* Simplify focus rings */
+.MuiButtonBase-root:focus-visible {
+    outline: 3px solid currentColor !important;
+    outline-offset: 2px !important;
+}
+
+/* ============================================================================
+   LOGIN PAGE - MOBILE RESPONSIVE
+   ============================================================================ */
+
+/* Container */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background */
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(13, 71, 161, 0.85) 0%, rgba(25, 118, 210, 0.85) 100%);
+    z-index: 1;
+}
+
+/* Left Panel */
+.left-panel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    position: relative;
+    z-index: 2;
+}
+
+.welcome-content {
+    max-width: 600px;
+    color: #fff;
+}
+
+.welcome-title {
+    font-weight: 800 !important;
+    margin-bottom: 1rem !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.brand-container {
+    margin: 2rem 0;
+}
+
+.welcome-subtitle {
+    font-weight: 500 !important;
+    opacity: 0.95;
+    line-height: 1.6 !important;
+}
+
+/* Feature Showcase */
+.feature-showcase-container {
+    margin-top: 2rem;
+}
+
+.feature-showcase {
+    padding: 1.5rem;
+    border-radius: 12px;
+    background-color: rgba(13, 71, 161, 0.4);
+    backdrop-filter: blur(10px);
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.feature-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.feature-icon {
+    font-size: 2.25rem !important;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.feature-title {
+    color: #fff !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.feature-description {
+    color: #fff !important;
+    font-size: 1rem !important;
+}
+
+/* Feature Dots */
+.feature-dots-container {
+    margin-top: 1rem;
+}
+
+.feature-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.feature-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.feature-dot.active {
+    background-color: #fff;
+    transform: scale(1.2);
+}
+
+/* Compliance Notice */
+.compliance-notice-container {
+    margin-top: 2rem;
+}
+
+.compliance-notice {
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.compliance-text {
+    color: #fff !important;
+    font-style: italic !important;
+    text-align: center !important;
+    font-size: 0.875rem !important;
+}
+
+/* Right Panel */
+.right-panel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    background-color: #f5f5f5;
+    position: relative;
+    z-index: 2;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 450px;
+    padding: 2.5rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+
+.login-title {
+    font-weight: 700 !important;
+    color: #0d47a1 !important;
+    margin-bottom: 0.5rem !important;
+    text-align: center;
+}
+
+.login-subtitle {
+    color: #666 !important;
+    text-align: center;
+    margin-bottom: 2rem !important;
+}
+
+/* Notification */
+.notification-alert {
+    width: 100%;
+    font-weight: 500 !important;
+}
+
+/* Pending User Message */
+.pending-user-message {
+    padding: 1.25rem;
+    border-radius: 12px;
+    background-color: rgba(33, 150, 243, 0.1);
+    border: 1px dashed #2196f3;
+    margin-bottom: 1.25rem;
+    text-align: center;
+}
+
+.pending-title-container {
+    display: inline-block;
+    margin-bottom: 0.625rem;
+}
+
+.pending-title {
+    color: #2196f3 !important;
+    font-weight: 700 !important;
+}
+
+.pending-text {
+    color: #333 !important;
+    margin-bottom: 1rem !important;
+}
+
+.hourglass-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.hourglass-icon {
+    color: #2196f3;
+    font-size: 2rem !important;
+    margin: 0 0.25rem;
+}
+
+.pending-subtext {
+    color: #555 !important;
+    font-size: 0.875rem !important;
+}
+
+/* Error Message */
+.error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+.error-icon {
+    background-color: #c62828;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+}
+
+/* Input Groups */
+.input-group {
+    margin-bottom: 1.25rem;
+}
+
+.input-icon {
+    color: #0d47a1;
+}
+
+.visibility-toggle {
+    color: #000 !important;
+}
+
+/* Remember & Forgot */
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.remember-text {
+    color: #000;
+    font-weight: 600;
+}
+
+.forgot-link {
+    color: #0d47a1;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.forgot-link:hover {
+    color: #1976d2;
+    text-decoration: underline;
+}
+
+/* Buttons */
+.login-btn {
+    width: 100%;
+    margin-bottom: 1.5rem !important;
+}
+
+/* Signup Prompt */
+.signup-prompt {
+    text-align: center !important;
+    color: #666 !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.signup-link {
+    color: #0d47a1;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.signup-link:hover {
+    color: #1976d2;
+    text-decoration: underline;
+}
+
+/* Association Link */
+.association-link-container {
+    text-align: center;
+}
+
+.association-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #0d47a1, #1976d2);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.association-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(13, 71, 161, 0.3);
+}
+
+.link-icon {
+    margin-right: 0.5rem;
+    font-size: 1rem !important;
+}
+
+/* Floating Circles */
+.floating-circle {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.floating-circle.large {
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(13, 71, 161, 0.7), rgba(33, 150, 243, 0.7));
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.floating-circle.small-1 {
+    top: 25%;
+    left: 15%;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.floating-circle.small-2 {
+    bottom: 30%;
+    left: 60%;
+    width: 30px;
+    height: 30px;
+    background: rgba(13, 71, 161, 0.3);
+}
+
+/* ============================================================================
+   MOBILE RESPONSIVE
+   ============================================================================ */
+
+@media (max-width: 1024px) {
+    .left-panel,
+    .right-panel {
+        padding: 2rem;
+    }
+
+    .welcome-title {
+        font-size: 2rem !important;
+    }
+
+    .feature-showcase {
+        min-height: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+    }
+
+    .left-panel {
+        display: none; /* Hide left panel on mobile */
+    }
+
+    .right-panel {
+        flex: 1;
+        padding: 1.5rem;
+        min-height: 100vh;
+    }
+
+    .login-card {
+        padding: 2rem 1.5rem;
+        box-shadow: none;
+    }
+
+    .login-title {
+        font-size: 1.75rem !important;
+    }
+
+    .remember-forgot {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .floating-circle.large {
+        width: 40px;
+        height: 40px;
+    }
+
+    .floating-circle.small-1,
+    .floating-circle.small-2 {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .right-panel {
+        padding: 1rem;
+    }
+
+    .login-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .login-title {
+        font-size: 1.5rem !important;
+    }
+
+    .login-subtitle {
+        font-size: 0.875rem !important;
+    }
+
+    .input-group {
+        margin-bottom: 1rem;
+    }
+
+    .association-link {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.875rem;
+    }
+}
